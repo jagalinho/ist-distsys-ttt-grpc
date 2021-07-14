@@ -1,0 +1,57 @@
+//
+// Protocol buffers definition for TTT (T3)
+//
+syntax = "proto3";
+package sdis.grpc.ttt;
+
+enum Player {
+    Player0 = 0;
+    Player1 = 1;
+}
+
+enum Winner {
+    Winner0 = 0;
+    Winner1 = 1;
+
+    WinnerNone = -1;
+    WinnerDraw = 2;
+}
+
+message chooseSymbolRequest {
+    string SymbolPlayer0 = 1;
+    string SymbolPlayer1 = 2;
+}
+
+message PlayRequest {
+    Player player = 1;
+    uint32 row = 2;
+    uint32 col = 3;
+}
+
+message CheckWinnerRequest {
+}
+
+message CurrentBoardRequest {
+}
+
+message chooseSymbolResponse {
+}
+
+message PlayResponse {
+    bool valid = 1;
+}
+
+message CheckWinnerResponse {
+    Winner winner = 1;
+}
+
+message CurrentBoardResponse {
+    string board = 1;
+}
+
+service T3Service {
+    rpc setSymbols(chooseSymbolRequest) returns (chooseSymbolResponse);
+    rpc play (PlayRequest) returns (PlayResponse);
+    rpc checkWinner (CheckWinnerRequest) returns (CheckWinnerResponse);
+    rpc currentBoard (CurrentBoardRequest) returns (CurrentBoardResponse);
+}
